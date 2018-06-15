@@ -44,9 +44,9 @@ With options:
 
 ### Options
 
-    <ul data-toc="content" data-toc-headings="headings"></ul>
+    <ul data-toc="content" data-toc-headings="headings" data-toc-add-headings-numbering="true"></ul>
 
-    $(...).toc({content: "body", headings: "h1,h2,h3"});
+    $(...).toc({content: "body", headings: "h1,h2,h3", addHeadingsNumbering: true});
 
 The plugin has two options:
 
@@ -57,6 +57,8 @@ The plugin has two options:
   all `h1`, `h2`, and `h3` elements to build the TOC, with `h1` being a level 1, `h2` a level 2, and
   so on. You can use any valid list of jQuery selectors; for example, if you just want `h1` tags
   with a specific class, and no `h3` tags, you could use `"h1.title,h2"` for this parameter.
+* `addHeadingsNumbering` is a boolean. On `true` the plugin will add 1.2.3 numbering of the all
+  headings in TOC
 
 In addition, the plugin will create nested lists of the same type (`ul` or `ol`) as the element that
 it is called on.

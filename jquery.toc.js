@@ -30,12 +30,13 @@
                 stack = [root], // The upside-down stack keeps track of list elements
                 listTag = this.tagName,
                 currentLevel = 0,
-                headingSelectors;
+                headingSelectors,
+                headingNumbering = [0],
 
             // Defaults: plugin parameters override data attributes, which override our defaults
             thisOptions = $.extend(
-                {content: "body", headings: "h1,h2,h3"},
-                {content: data.toc || undefined, headings: data.tocHeadings || undefined},
+                {content: "body", headings: "h1,h2,h3", addHeadingsNumbering: false},
+                {content: data.toc || undefined, headings: data.tocHeadings || undefined, addHeadingsNumbering: data.tocAddHeadingsNumbering || undefined},
                 options
             );
             headingSelectors = thisOptions.headings.split(",");
@@ -88,6 +89,17 @@
                     // the containing element.
                     stack.splice(0, Math.min(currentLevel - level, Math.max(stack.length - 1, 0)));
                 }
+
+		if (level > currentLevel) {
+			headingNumbering.push(0);
+		}
+		if (level < currentLevel) {
+			headingNumbering.pop();
+		}
+		headingNumbering[headingNumbering.length-1]++;
+		if (thisOptions.addHeadingsNumbering) {
+			elem[0].textContent = headingNumbering.join(".")+" "+elem[0].textContent;
+		}
 
                 // Add the list item
                 $("<li/>").appendTo(stack[0]).append(
